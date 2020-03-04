@@ -63,7 +63,7 @@ import re
 from os.path import splitext, isfile
 
 def time2ms(time):
-    return ((time[0] * 60 + time[1]) * 60 + time[2]) * 1000 + time[3] / 10**6
+    return ((int(time[0]) * 60 + int(time[1])) * 60 + float(time[2]+"."+time[3])) * 1000
 
 # Get chapter file path
 if not avsp.GetScriptFilename():
@@ -111,7 +111,7 @@ with open(chapters_path) as file:
     for line in file:
         chapter = re_chapters.search(line)
         if chapter:
-            chapters_ms.append(time2ms([int(g) for g in chapter.groups()]))
+            chapters_ms.append(time2ms([str(g) for g in chapter.groups()]))
 
 # Convert ms to frame number and insert the Trims
 trims = 'Trim('
