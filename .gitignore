@@ -1,9 +1,0 @@
-*
-!.gitignore
-!.gitattributes
-!README.md
-!COPYING.txt
-!*.py
-\[*\]*.py
-*---.py
-*test.py

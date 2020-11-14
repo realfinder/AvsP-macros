@@ -14,42 +14,11 @@ in the title of either the start or end frame.  When using interpolation the
 two values can be introduced both in the same bookmark or separately.
 
 More info on ConditionalReader:
-http://avisynth.org/mediawiki/ConditionalReader
+http://avisynth.nl/index.php/ConditionalReader
 
 
-Date: 2012-11-27
-Latest version:
-  https://github.com/vdcrim/avsp-macros
-Original macro idea from Bernardd:
-  http://forum.doom9.org/showpost.php?p=1562538&postcount=738
-
-Changelog:
-- fix
-- change some defaults, improve the macro description
-- accept introducing the two values needed for interpolation separately 
-- check if there are bookmarks before showing the prompt
-- minor fixes
-- warn if an output path has not been introduced instead of just exiting
-- save introduced values for showing the dialog again if interpolation is
-  selected but not Int or Float, and for the case above
-- fix Python 2.6 compatibility
-
-
-Copyright (C) 2012  Diego Fernández Gosende <dfgosende@gmail.com>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along 
-with this program.  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
-
+Written by vdcrim
+Original macro idea by Bernardd
 """
 
 # PREFERENCES
@@ -71,8 +40,6 @@ default_insert_path = True
 import sys
 import os.path
 
-self = avsp.GetWindow()
-
 # Get the bookmarks
 bmlist = avsp.GetBookmarkList(title=True)
 if not bmlist:
@@ -82,14 +49,7 @@ bmlist.sort()
 
 # Prompt for options
 if not default_filename:
-    if self.version > '2.3.1':
-        default_filename = avsp.GetScriptFilename(propose='general')
-    else:
-        default_filename = os.path.join(self.options['recentdir'], 
-            self.scriptNotebook.GetPageText(self.scriptNotebook.GetSelection()).lstrip('* '))
-default_filename2, ext = os.path.splitext(default_filename)
-if ext in ('.avs', '.avsi'):
-    default_filename = default_filename2
+    default_filename = os.path.splitext(avsp.GetScriptFilename(propose='general'))[0]
 default_filename += suffix
 txt_filter = (_('Text files') + ' (*.txt)|*.txt|' + _('All files') + '|*.*')
 while True:
